@@ -1,0 +1,161 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<title>Capture Image</title>
+<style>
+    #snap {
+        width: 80vw;
+        height: 80vh;
+        border: none;
+        background-color: #ffffff;
+        text-align: center;
+        float: left;
+    }
+
+    .snap-canvas {
+        width: 80vw;
+        height: 80vh;
+        border: none;
+        background-color: #ffffff;
+        text-align: center;
+    }
+
+    #permission {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #request {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style></head>
+
+<body>
+<input type="hidden" name="uid" id="uid" value="${app.sender}">
+<input type="hidden" name="botId" id="botId" value="${app.bot}">
+<button id="snap">
+<video id="video" width="100%" height="100%" autoplay=""></video>
+<p style="margin: 0px; padding: 0px; font-size: 1em; display: block;" id="note">
+<i><b>Note:</b> Click on the image to capture</i>
+</p>
+<br>
+<p style="margin: 0px; padding: 0px; font-size: 1.5em; display: none;" id="request">
+<span>Please allow access to camera</span>
+</p>
+<canvas id="canvas" class="snap-canvas" style="display: none; padding: 0; margin: 0;" width="931" height="483"></canvas>
+</button>
+<h1 id="permission" style="display:none">Permission denied to camera!</h1>
+<script>
+        function postForm(data) {
+            const form = document.createElement('form');
+            form.name = "frm";
+           form.action = "https://app.yellowmessenger.com/components/components/camera/send-data";
+//             form.action = '/components/camera/send-data';
+            form.method = "post";
+            const input = document.createElement('input');
+            input.type = "hidden";
+            input.name = "base64";
+            input.value = data;
+            form.append(input);
+            const inputTwo = document.createElement('input');
+            inputTwo.type = "hidden";
+            inputTwo.name = "uid";
+            inputTwo.value = uid
+            form.append(inputTwo);
+            const inputThree = document.createElement('input');
+            inputThree.type = "hidden";
+            inputThree.name = "botId";
+            inputThree.value = botId;
+            form.append(inputThree);
+            document.body.appendChild(form);
+            setTimeout(() => {
+                form.submit();
+            }, 2000)
+        }
+        function convertCanvasToImage(canvas) {
+            var image = new Image();
+            image.src = canvas.toDataURL("image/png");
+            return image;
+        }
+        function stopStream() {
+            window.stream.getTracks().forEach(function (track) {track.stop();})
+        }
+    </script>
+<script>
+        const uid = document.getElementById('uid') && document.getElementById('uid').value;
+        const botId = document.getElementById('botId') && document.getElementById('botId').value;
+        var canvas = document.getElementById('canvas');
+        let width = document.getElementById('snap').offsetWidth;
+        let height = document.getElementById('snap').offsetHeight;
+        canvas.width = width;
+        canvas.height = height;
+        var context = canvas.getContext('2d');
+        var video = document.getElementById('video');
+
+        // document.getElementById("stop").addEventListener("click", function () {
+        //     stopStream();
+        // })
+        document.getElementById("snap").addEventListener("click", function () {
+            try {
+
+                if (
+                    ($("#request") && $("#request").css('display') === 'block')
+                    || ($("#permission") && $("#permission").css('display') === 'block')
+                ) {
+                    return;
+                }
+                const width = document.getElementById('snap').offsetWidth;
+                const height = document.getElementById('snap').offsetHeight;
+                document.getElementById("snap").remove();
+                context.lineWidth = 0;
+                context.strokeStyle = "#ffffff";
+                context.drawImage(video, 0, 0, width, height);
+                const image = convertCanvasToImage(canvas);
+                image.style.borderRadius = "10px";
+                document.getElementsByTagName('body')[0].appendChild(image);
+                stopStream();
+                postForm(image.src, uid);
+            } catch (e) {
+                console.log(e, 'Camera widget error while sending data to iframe');
+            }
+        });
+        var video = document.getElementById('video');
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
+                window.stream = stream;
+                video.srcObject = stream;
+                video.play();
+                const requestEle = $("#request");
+                const noteEle = $("#note");
+                if (requestEle) {
+                    requestEle.css('display', 'none');
+                }
+                if (note) {
+                    noteEle.css('display', 'block');
+                }
+            }).catch((e) => {
+                console.log(e, 'Camera widget: permission denied');
+                const permissionEle = $("#permission");
+                const noteEle = $("#note");
+                const requestEle = $("#request");
+                if (permissionEle) {
+                    permissionEle.css('display', 'block');
+                }
+                if (requestEle) {
+                    requestEle.css('display', 'none');
+                }
+                if (noteEle) {
+                    noteEle.css('display', 'none');
+                }
+            });
+        }        
+    </script>
+
+</body></html>
