@@ -42,7 +42,33 @@
     let mediaRecorder = null;
     let mediaChunks = null;
     let processingPreviewIntervalId = null;
-
+    
+        function postForm(data) {
+            const form = document.createElement('form');
+            form.name = "frm";
+           form.action = "https://app.yellowmessenger.com/components/components/camera/send-data";
+//             form.action = '/components/camera/send-data';
+            form.method = "post";
+            const input = document.createElement('input');
+            input.type = "hidden";
+            input.name = "base64";
+            input.value = data;
+            form.append(input);
+            const inputTwo = document.createElement('input');
+            inputTwo.type = "hidden";
+            inputTwo.name = "uid";
+            inputTwo.value = uid
+            form.append(inputTwo);
+            const inputThree = document.createElement('input');
+            inputThree.type = "hidden";
+            inputThree.name = "botId";
+            inputThree.value = botId;
+            form.append(inputThree);
+            document.body.appendChild(form);
+            setTimeout(() => {
+                form.submit();
+            }, 2000)
+        }
     function processFrame() {
         let cameraPreview = document.getElementById("cameraPreview");
         
@@ -74,10 +100,7 @@
         .then((data)=>{
             console.log(data)
 
-            document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({
-                event_code: 'self-video-event',
-                data: data
-            }), '*');
+            postForm(data)
             return;
             
         })
