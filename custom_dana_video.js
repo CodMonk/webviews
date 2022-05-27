@@ -1,10 +1,4 @@
-app.sendWebView('',
-    'https://codmonk.github.io/webviews/video.html')
 
-
-
-
-<script>
 
     const ROI_X = 250;
     const ROI_Y = 150;
@@ -118,4 +112,3 @@ app.sendWebView('',
             processingPreviewIntervalId = null;
         }
     };
-    </script>
