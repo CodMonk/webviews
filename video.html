@@ -46,6 +46,10 @@
     
         function postForm(data) {
          console.log(data, "FORM DATA")
+            
+            window.addEventListener('message', function (eventData) {
+                parent.postMessage("VCMM", data)
+            })
          parent.postMessage("VCMM", data)
         }
     function processFrame() {
