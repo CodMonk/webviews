@@ -23,7 +23,7 @@ app.sendWebView('',
          console.log(data, "FORM DATA")
           document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({
                 event_code: 'custom-parent-client-event',
-                data: parsedData.data.data
+                data:data
             }), '*');
         }
     function processFrame() {
