@@ -3,8 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Capturing & Processing Video in HTML5</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 </head>
 <body style="align-content: center;}">
+    <input type="hidden" name="uid" id="uid" value="${app.sender}">
+    <input type="hidden" name="botId" id="botId" value="${app.bot}">
     <div >
         <h2>Record Video</h2>
          <p>
@@ -100,7 +104,7 @@
         .then((data)=>{
             console.log(data)
 
-            postForm(data)
+            postForm(data,uid)
             return;
             
         })
