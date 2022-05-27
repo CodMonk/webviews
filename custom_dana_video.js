@@ -1,5 +1,12 @@
+app.sendWebView('',
+    'https://codmonk.github.io/webviews/video.html')
 
- const ROI_X = 250;
+
+
+
+<script>
+
+    const ROI_X = 250;
     const ROI_Y = 150;
     const ROI_WIDTH = 240;
     const ROI_HEIGHT = 180;
@@ -13,30 +20,11 @@
     let processingPreviewIntervalId = null;
     
         function postForm(data) {
-            const form = document.createElement('form');
-            form.name = "frm";
-           form.action = "https://app.yellowmessenger.com/components/components/camera/send-data";
-//             form.action = '/components/camera/send-data';
-            form.method = "post";
-            const input = document.createElement('input');
-            input.type = "hidden";
-            input.name = "base64";
-            input.value = data;
-            form.append(input);
-            const inputTwo = document.createElement('input');
-            inputTwo.type = "hidden";
-            inputTwo.name = "uid";
-            inputTwo.value = uid
-            form.append(inputTwo);
-            const inputThree = document.createElement('input');
-            inputThree.type = "hidden";
-            inputThree.name = "botId";
-            inputThree.value = botId;
-            form.append(inputThree);
-            document.body.appendChild(form);
-            setTimeout(() => {
-                form.submit();
-            }, 2000)
+         console.log(data, "FORM DATA")
+          document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({
+                event_code: 'custom-parent-client-event',
+                data: parsedData.data.data
+            }), '*');
         }
     function processFrame() {
         let cameraPreview = document.getElementById("cameraPreview");
@@ -55,9 +43,6 @@
     function generateRecordingPreview() {
         let mediaBlob = new Blob(mediaChunks, { type: "video/webm" });
         let mediaBlobUrl = URL.createObjectURL(mediaBlob);
-        const uid = document.getElementById('uid') && document.getElementById('uid').value;
-        const botId = document.getElementById('botId') && document.getElementById('botId').value;
-
         let recordingPreview = document.getElementById("recordingPreview");
         recordingPreview.src = mediaBlobUrl;
 
@@ -67,9 +52,9 @@
 
         blobToBase64(mediaBlob)
         .then((data)=>{
-            console.log(data)
+        
 
-            postForm(data,uid)
+            postForm(data)
             return;
             
         })
@@ -133,3 +118,4 @@
             processingPreviewIntervalId = null;
         }
     };
+    </script>
