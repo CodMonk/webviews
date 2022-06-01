@@ -45,11 +45,14 @@
     let processingPreviewIntervalId = null;
     
         function postForm(data) {
-        window.YellowMessengerPlugin.sendEvent({
-              message:data,
-              "*"
-        }
-          );
+       window.YellowMessengerPlugin.sendEvent({
+        event: {
+          code: "video_data",
+          data: data
+        },
+      },
+      "*"
+  );
             
            
        
