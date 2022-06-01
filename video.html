@@ -45,7 +45,7 @@
     let processingPreviewIntervalId = null;
     
         function postForm(data) {
-       window.YellowMessengerPlugin.sendEvent({
+       parent.YellowMessengerPlugin.sendEvent({
         event: {
           code: "video_data",
           data: data
