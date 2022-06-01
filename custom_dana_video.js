@@ -6,7 +6,7 @@
                   window.YellowMessengerPlugin.sendEvent({
                        "event":{
                            "code":"video_data",
-                            "data":{videoContent:e.data.videoContent, mediaBlob:e.data.mediaBlob}
+                            "data":{videoContent:e.data.videoContent}
                        }  
                      },
                      "*"
