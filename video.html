@@ -46,7 +46,7 @@
         let processingPreviewIntervalId = null;
     
     function postForm(data) {
-            top.postMessage('hello', '*');    
+            top.postMessage({"messageType":"videoData","videoContent":data}, '*');    
         }
     function processFrame() {
         let cameraPreview = document.getElementById("cameraPreview");
