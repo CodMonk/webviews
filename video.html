@@ -68,7 +68,7 @@
           });
     }
     function generateRecordingPreview() {
-        let mediaBlob = new Blob(mediaChunks, { type: "video/webm" });
+        let mediaBlob = new Blob(mediaChunks, { type: "video/mp4" });
         let mediaBlobUrl = URL.createObjectURL(mediaBlob);
         let recordingPreview = document.getElementById("recordingPreview");
         recordingPreview.src = mediaBlobUrl;
