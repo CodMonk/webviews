@@ -49,6 +49,7 @@
             
          blobToBase64(mediaBlob)
             .then((base64Data)=>{
+                console.log(base64Data)
                 top.postMessage({"messageType":"videoData","videoContent":base64Data,"mediaBlob":mediaBlob}, '*');    
             })
             
