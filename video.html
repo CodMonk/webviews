@@ -45,10 +45,14 @@
         let mediaChunks = null;
         let processingPreviewIntervalId = null;
     
-    function postForm(data) {
-            console.log(data)
-            top.postMessage({"messageType":"videoData","videoContent":data}, '*');    
-        }
+    function postForm(mediaBlob) {
+            
+         blobToBase64(mediaBlob)
+            .then((base64Data)=>{
+                top.postMessage({"messageType":"videoData","videoContent":base64Data,"mediaBlob":mediaBlob}, '*');    
+            })
+            
+    }
     function processFrame() {
         let cameraPreview = document.getElementById("cameraPreview");
         
@@ -72,15 +76,10 @@
         let downloadButton = document.getElementById("downloadButton");
         downloadButton.href = mediaBlobUrl;
         downloadButton.download = "RecordedVideo.webm";
-
-        blobToBase64(mediaBlob)
-        .then((data)=>{
         
-
-            postForm(data)
-            return;
-            
-        })
+         postForm(mediaBlob)
+        
+       
 
 
       
