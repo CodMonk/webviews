@@ -45,11 +45,13 @@
     let processingPreviewIntervalId = null;
     
         function postForm(data) {
-         console.log(data, "FORM DATA")
+        window.YellowMessengerPlugin.sendEvent({
+              message:data,
+              "*"
+        }
+          );
             
-            window.addEventListener('message', function (eventData) {
-                parent.postMessage("VCMM")
-            })
+           
        
         }
     function processFrame() {
