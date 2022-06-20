@@ -186,12 +186,12 @@ var dataUrl = canvas.toDataURL();
 
    window.parent.postMessage(JSON.stringify({
                           event_code: 'ym-client-event',
-                          data: JSON.stringify({
+                          data: {
                               event: {
                                   code: "userdetails",
                                   data: dataUrl
                               }
-                          })
+                          }
                       }), '*');
 };
 
