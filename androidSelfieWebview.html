@@ -8,23 +8,13 @@
 
   <script>
      function openCamera(){
-      top.postMessage({"event":"open-camera"}, '*');    
+      
+        top.postMessage({"event":"open-camera"}, '*');    
      }
-     window.addEventListener( "selfie-data",
+     window.addEventListener( "message",
           function (e) {
               
-              console.log(e)
-                   
-                //   window.YellowMessengerPlugin.sendEvent({
-                //        "event":{
-                //            "code":"video_data",
-                //             "data":e.data.videoContent
-                //        }  
-                //      },
-                //      "*"
-                //  );
-
-             
+               console.log(e.data)
           },
           false);
   </script>
