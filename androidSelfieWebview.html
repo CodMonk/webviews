@@ -1,0 +1,37 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <title>Capture Image</title>
+
+
+  <script>
+     function openCamera(){
+      top.postMessage({"event":"open-camera"}, '*');    
+     }
+     window.addEventListener( "selfie-data",
+          function (e) {
+              
+              console.log(e)
+                   
+                //   window.YellowMessengerPlugin.sendEvent({
+                //        "event":{
+                //            "code":"video_data",
+                //             "data":e.data.videoContent
+                //        }  
+                //      },
+                //      "*"
+                //  );
+
+             
+          },
+          false);
+  </script>
+</head>
+  
+  <body>
+ 
+    <button id="open-camera" value="Clear here to take selfie" onclick="openCamera()">
+  </body>
+  </html>
