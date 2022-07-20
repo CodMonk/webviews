@@ -1,17 +1,6 @@
    window.addEventListener( "message",
           function (e) {
-              
-                if(e.data.messageType=="videoData"){
-                   
-                  window.YellowMessengerPlugin.sendEvent({
-                       "event":{
-                           "code":"video_data",
-                            "data":e.data.videoContent
-                       }  
-                     },
-                     "*"
-                 );
-
-                }
+              console.log("EVENT RECEIVED")
+               console.log(e)
           },
           false);
